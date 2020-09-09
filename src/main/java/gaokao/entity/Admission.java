@@ -1,15 +1,13 @@
 package gaokao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "admission")
-public class Admission implements Serializable, BaseEntity {
+@NamedQuery(query = "SELECT a FROM Admission a WHERE a.studentID = :ID", name = "find admission by ID")
+public class Admission implements Serializable {
     @Id
     @Column(name = "studentID")
     private String studentID;

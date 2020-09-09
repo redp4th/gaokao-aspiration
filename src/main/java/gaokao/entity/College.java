@@ -1,15 +1,16 @@
 package gaokao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "college")
-public class College implements Serializable, BaseEntity {
+@NamedQueries({
+    @NamedQuery(query = "SELECT c FROM College c where c.ID = :ID", name = "find college by ID")
+        })
+public class College implements Serializable {
     @Id
     @Column(name = "collegeID")
     private String ID;
@@ -22,6 +23,17 @@ public class College implements Serializable, BaseEntity {
 
     @Column(name = "collegeAddr")
     private String address;
+
+    @OneToMany(targetEntity = Major.class)
+    private List<Major> majorList;
+
+    public List<Major> getMajorList() {
+        return majorList;
+    }
+
+    public void setMajorList(List<Major> majorList) {
+        this.majorList = majorList;
+    }
 
     public String getID() {
         return ID;

@@ -8,6 +8,7 @@ public class StudentInfo {
     private String pwd;
     private int score;
     private Map<String, String[]> aspirations;
+//    private Map<String, String[]> aspirationNames;
 
     public StudentInfo(String ID, String pwd, String name, int score, Map<String, String[]> aspirations) {
         this.ID = ID;

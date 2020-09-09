@@ -1,12 +1,13 @@
 package gaokao.utils;
 
 import java.util.List;
+import gaokao.entity.Major;
 
 public class CollegeInfo {
     private String name;
     private String ID;
     private String addr;
-    private List<MajorInfo> majorList;
+    private List<Major> majorList;
     private int total;
     private int score;
 
@@ -26,11 +27,11 @@ public class CollegeInfo {
         this.ID = ID;
     }
 
-    public List<MajorInfo> getMajorList() {
+    public List<Major> getMajorList() {
         return majorList;
     }
 
-    public void setMajorList(List<MajorInfo> majorList) {
+    public void setMajorList(List<Major> majorList) {
         this.majorList = majorList;
     }
 

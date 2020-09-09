@@ -1,58 +1,68 @@
 package gaokao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "student")
-public class Student implements Serializable, BaseEntity {
+@NamedQuery(query = "SELECT s FROM Student s where s.studentID = :ID", name = "find student by ID")
+public class Student implements Serializable {
     @Id
     @Column(name = "studentID")
-    private String ID;
+    private String studentID;
 
-    @Column(name = "studentPw")
-    private String pw;
+    @Column(name = "studentPwd")
+    private String studentPwd;
 
     @Column(name = "studentScore")
-    private int score;
+    private int studentScore;
 
     @Column(name = "studentName")
-    private String name;
+    private String studentName;
 
-    public String getID() {
-        return ID;
+    @OneToMany(targetEntity = Aspiration.class)
+    private List aspList;
+
+    public String getStudentID() {
+        return studentID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
-    public String getPw() {
-        return pw;
+    public String getStudentPwd() {
+        return studentPwd;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setStudentPwd(String studentPwd) {
+        this.studentPwd = studentPwd;
     }
 
-    public int getScore() {
-        return score;
+    public int getStudentScore() {
+        return studentScore;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setStudentScore(int studentScore) {
+        this.studentScore = studentScore;
     }
 
-    public String getName() {
-        return name;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public List getAspList() {
+        return aspList;
+    }
+
+    public void setAspList(List aspList) {
+        this.aspList = aspList;
     }
 
     @Override
@@ -60,11 +70,11 @@ public class Student implements Serializable, BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return ID.equals(student.ID);
+        return studentID.equals(student.studentID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID);
+        return Objects.hash(studentID);
     }
 }

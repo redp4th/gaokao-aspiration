@@ -3,12 +3,15 @@ package gaokao.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "aspiration")
-public class Aspiration implements Serializable, BaseEntity {
+@NamedQueries({
+        @NamedQuery(query = "SELECT a FROM Aspiration a WHERE a.studentID = :ID", name = "find aspiration by student ID"),
+        @NamedQuery(query = "SELECT a FROM Aspiration a WHERE a.studentID = :sID AND a.collegeID = :cID", name = "find aspiration by college and student")
+        })
+public class Aspiration implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "aspirationID")

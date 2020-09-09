@@ -28,16 +28,27 @@ public class CollegeFacade {
         ret.setScore(college.getScore());
         ret.setName(college.getName());
 
-        List<Major> major = em.createQuery("SELECT m FROM Major m WHERE m.collegeID = :cID").setParameter("cID", collegeID).getResultList();
+        List<Major> majors = college.getMajorList();
+        ret.setMajorList(majors);
+
         int total = 0;
-        List<MajorInfo> majorInfos = new ArrayList<>();
-        for (Major m : major) {
-            majorInfos.add(new MajorInfo(m.getMajorID(), m.getName(), m.getScore(), m.getNum()));
+        for (Major m : majors)
             total += m.getNum();
-        }
-        ret.setMajorList(majorInfos);
         ret.setTotal(total);
         return ret;
+    }
+
+    public void grantAdmission(String studentID, String collegeID, String majorID) {
+        Admission adm = new Admission();
+        adm.setStudentID(studentID);
+        adm.setCollegeID(collegeID);
+        adm.setMajorID(majorID);
+        em.persist(adm);
+    }
+
+    public List<Student> getEnrollStudent(String collegeID) {
+        List<Student> l = em.createQuery("SELECT s FROM Student s WHERE EXISTS (SELECT a FROM Aspiration a WHERE a.collegeID = :cID AND a.studentID = s.studentID) ORDER BY s.studentScore DESC ").setParameter("cID", collegeID).getResultList();
+        return l;
     }
 
 }

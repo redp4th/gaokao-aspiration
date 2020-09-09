@@ -1,21 +1,19 @@
 package gaokao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "major")
-public class Major implements Serializable, BaseEntity {
+@NamedQueries({
+        @NamedQuery(query = "SELECT m FROM Major m WHERE m.majorID = :mID", name = "find major by ID"),
+        @NamedQuery(query = "SELECT m FROM Major m WHERE m.college.ID = :cID AND m.name = :name", name = "find major by name")
+})
+public class Major implements Serializable {
     @Id
     @Column(name = "majorID")
     private String majorID;
-
-    @Column(name = "majorScore")
-    private int score;
 
     @Column(name = "majorNo")
     private int num;
@@ -23,8 +21,8 @@ public class Major implements Serializable, BaseEntity {
     @Column(name = "majorName")
     private String name;
 
-    @Column(name = "collegeID")
-    private String collegeID;
+    @ManyToOne
+    private College college;
 
     public String getMajorID() {
         return majorID;
@@ -32,14 +30,6 @@ public class Major implements Serializable, BaseEntity {
 
     public void setMajorID(String majorID) {
         this.majorID = majorID;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public int getNum() {
@@ -58,12 +48,12 @@ public class Major implements Serializable, BaseEntity {
         this.name = name;
     }
 
-    public String getCollegeID() {
-        return collegeID;
+    public College getCollege() {
+        return college;
     }
 
-    public void setCollegeID(String collegeID) {
-        this.collegeID = collegeID;
+    public void setCollege(College college) {
+        this.college = college;
     }
 
     @Override
