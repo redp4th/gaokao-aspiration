@@ -11,6 +11,7 @@ import gaokao.wrapper.StudentFacade;
 import javax.ejb.EJB;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UserServiceImpl implements UserSevice {
     @EJB
@@ -61,11 +62,13 @@ public class UserServiceImpl implements UserSevice {
         StudentInfo studentinfo=studentFacade.getInfo(id);
         List<Object> infoList = new ArrayList<>();
         boolean flag=false;
+
+
         if (studentinfo.getAspirations()!=null){
             flag=true;
         }
-        infoList.add(flag);
-        Response response = new Response("前端显示消息", infoList, 0);
+
+        Response response = new Response("前端显示消息", studentinfo.getAspirations(), 0);
         return response;
     }
 
@@ -76,18 +79,18 @@ public class UserServiceImpl implements UserSevice {
         for(int i=0;i<8;i++){
             String[] majorinfo=new String[6];
             int k=0;
-            for(int j=i;j<i+6;j++){
+            for(int j=6*i;j<6*i+6;j++){
                 majorinfo[k]=majorinfolist.get(j);
                 k++;
             }
-            //写入志愿   学校id  学校名  专业信息  分八次写入
+
+            //写入志愿   学生id  学校名  专业信息  分八次写入
             studentFacade.editAspiration(id,collegelist.get(i),majorinfo);
         }
-        StudentInfo studentInfo=  studentFacade.getInfo(id);
 
         boolean flag=true;
-        infoList.add(flag);
-        Response response = new Response("前端显示消息", infoList, 0);
+        //     infoList.add(flag);
+        Response response = new Response("前端显示消息", "1", 0);
         return response;
     }
 
@@ -125,5 +128,13 @@ public class UserServiceImpl implements UserSevice {
         String[] result=studentFacade.getAdmission(id);
 
         return result;
+    }
+    public Response viewAspiration(String id) {
+        StudentInfo studentInfo=studentFacade.getInfo(id);
+        Map<String,String[]> aspirationlist=studentInfo.getAspirations();
+
+
+        Response response=new Response("d",aspirationlist,1);
+        return response;
     }
 }

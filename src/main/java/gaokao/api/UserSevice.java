@@ -42,5 +42,8 @@ public interface UserSevice {
     @Produces("application/json")
     String[] view(@QueryParam("id") String id);
 
-
+    @GET
+    @Path("/viewASpiration")
+    @Produces("application/json")
+    Response viewAspiration(@QueryParam("id") String id);
 }
