@@ -13,7 +13,7 @@ public interface UserSevice {
     @GET
     @Path("/register")
     @Produces("application/json")
-    Response registerApi(@QueryParam("id") String id,@QueryParam("username") String username, @QueryParam("password") String password, @QueryParam("score") int Score);
+    Response registerApi(@QueryParam("id") String id,@QueryParam("username") String username, @QueryParam("password") String password, @QueryParam("score") int score);
     //登录
     @POST
     @Path("/login")

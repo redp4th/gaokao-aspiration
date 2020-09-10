@@ -20,20 +20,18 @@ public class UserServiceImpl implements UserSevice {
 
 
     @Override
-    public Response registerApi(String id,String username, String password, int Score) {
-        //前端返回结构体
-        List<Object> infoList = new ArrayList<>();
+    public Response registerApi(String id,String username, String password, int score) {
         //获得注册学生信息
-        Student student=studentFacade.register(id,password,Score,username);
-        boolean flag;
-        if(student.getStudentID()==id&&student.getStudentPwd()==password){
+
+        Student student=studentFacade.register(id,password,score,username);
+
+        boolean flag=true;
+        if(student!=null){
             flag=true;
-            infoList.add(flag);
         }else {
             flag=false;
-            infoList.add(flag);
         }
-        Response response = new Response("前端显示消息", infoList, 0);
+        Response response = new Response("前端显示消息", flag, 0);
         return response;
     }
 
