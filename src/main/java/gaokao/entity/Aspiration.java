@@ -63,7 +63,11 @@ public class Aspiration implements Serializable {
             return "";
         if(st.length == 1)
             return st[0];
-        return st[0] + "||" + cast(Arrays.copyOfRange(st, 1, st.length));
+        StringBuilder ret = new StringBuilder(new String(""));
+        for (int i = 0;i < st.length - 1; ++i) {
+            ret.append(st[i]).append("||");
+        }
+        return ret.toString();
     }
 
     @Override
